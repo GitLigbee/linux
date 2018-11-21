@@ -1,0 +1,63 @@
+# 磁盘由扇区组成，占512字节
+
+# 文件系统负责组织扇区
+## windows FAT32 NTFS
+## Linux ext2/3/4
+
+# stat 既有命令也有同名函数，用来获取文件Inode里的主要信息
+查看占据数据块block
+# stat()跟踪符号链接 lstat()不跟踪符号链接
+时间解释：
+atime 最近访问时间
+mtime 最近修改data时间
+ctime 最近修改inode时间
+
+# access
+按照实际用户/组进行测试，判断是否有权限/文件
+R_OK / W_OK / X_OK/ F_OK
+-- 执行命令，使用sudo进行用户切换时
+实际用户ID 普通用户
+有效用户ID root --
+
+# chmod
+
+# chown
+需要有root权限
+
+# utime
+修改文件时间
+
+# truncate
+截断
+
+# link
+创建一个硬链接，把对应文件的inode硬链接计数+1
+当rm文件时，只是删除了目录下的记录项和把inode硬链接计数-1，当硬链接计数减为0时，才会真正删除文件
+
+# symlink
+
+#readlink
+读符号链接所指向的文件名字，不读取文件内容
+
+# unlink
+如果是符号链接，删除符号链接
+如果是硬链接，硬链接计数-1，当减为0，释放数据块和inode
+如果硬链接计数减为0，但有进程已打开该文件，并持有文件描述符，则等该进程关闭该文件时，kernel才真正删除该文件
+利用该特性可创建临时文件，先open/create一个文件，马上ulink该文件
+
+# rename
+
+# chdir fchdir
+修改目录路径
+
+# getcwd
+获取当前目录
+
+# fpathconf
+获取系统对文件的设置 如文件名最大长度、文件路径长度
+
+# 目录操作
+
+# mkdir
+# rmdir
+# opendir
