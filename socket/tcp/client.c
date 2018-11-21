@@ -16,7 +16,7 @@ int main(int argc, char* argv[])
 {
     struct sockaddr_in serverAddr;
     int connectFd;
-    char ipstr[] = "192.168.1.102";
+    char ipstr[] = "172.17.0.1";
     char buf[MAX];
     int len;
     if(argc < 2) {
