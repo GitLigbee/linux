@@ -38,7 +38,7 @@ void *do_work(void *arg)
 
 int main(void)
 {
-    struct sockaddr_in servaddr, cliaddr;
+    struct sockaddr_in serverAddr, cliaddr;
     socklen_t cliaddr_len;
     int listenfd, connfd;
     int i=0;
@@ -51,8 +51,8 @@ int main(void)
     // 地址族协议 ipv4
     serverAddr.sin_family = AF_INET;
     serverAddr.sin_addr.s_addr = htonl(INADDR_ANY); // 本机任意IP地址
-    serverAddr.sin_port = htons(SERVER_PORT);
-    bind(socketFd, (struct sockaddr *)&serverAddr, sizeof(serverAddr));
+    serverAddr.sin_port = htons(SERV_PORT);
+    bind(listenfd, (struct sockaddr *)&serverAddr, sizeof(serverAddr));
     // listen
     listen(socketFd, 128);
     printf("listen %d\n", SERV_PORT);
