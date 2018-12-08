@@ -54,7 +54,7 @@ int main(void)
     serverAddr.sin_port = htons(SERV_PORT);
     bind(listenfd, (struct sockaddr *)&serverAddr, sizeof(serverAddr));
     // listen
-    listen(socketFd, 128);
+    listen(listenfd, 128);
     printf("listen %d\n", SERV_PORT);
 
     while(1) {
