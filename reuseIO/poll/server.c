@@ -10,6 +10,7 @@
 #include <errno.h>
 #include <fcntl.h>
 #include <stdlib.h>
+#include <poll.h>
 
 #define SERVER_PORT 8000
 #define MAX 80
@@ -77,7 +78,7 @@ int main(int argc, char* argv[])
         }
 
         for(i=1; i< maxi; i++) { // 检查client[]
-            if((sockfd = clent[i].fd) < 0 ) {
+            if((sockfd = client[i].fd) < 0 ) {
                 continue;
             }
             if(clent[i].revents & (POLLRDNORM | POLLERR)) {
