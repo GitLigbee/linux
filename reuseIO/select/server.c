@@ -7,6 +7,8 @@
 #include <netinet/in.h>
 #include <unistd.h>
 #include <ctype.h>
+#include <errno.h>
+#include <fcntl.h>
 
 #define SERVER_PORT 8000
 #define MAX 80
@@ -47,7 +49,8 @@ int main(int argc, char* argv[])
         rset = allset;
         nready = select(maxfd+1, &rset, NULL, NULL, NULL);
         if(nready < 0) {
-            perr_exit("select error");
+            perror("select error");
+            exit(1);
         }
 
         // 判断是否新的客户端链接
