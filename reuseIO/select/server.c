@@ -9,6 +9,7 @@
 #include <ctype.h>
 #include <errno.h>
 #include <fcntl.h>
+#include <stdlib.h>
 
 #define SERVER_PORT 8000
 #define MAX 80
