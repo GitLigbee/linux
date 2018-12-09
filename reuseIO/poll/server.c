@@ -81,7 +81,7 @@ int main(int argc, char* argv[])
             if((sockfd = client[i].fd) < 0 ) {
                 continue;
             }
-            if(clent[i].revents & (POLLRDNORM | POLLERR)) {
+            if(client[i].revents & (POLLRDNORM | POLLERR)) {
                 if( (n = read(sockfd, buf, MAX)) < 0) {
                     if( errno == ECONNRESET) {
                         // connection reset by client
@@ -96,7 +96,7 @@ int main(int argc, char* argv[])
                     // connection closed by client
                     printf("client[%d] closed connection.\n", i);
                     close(sockfd);
-                    clent[i].fd = -1;
+                    client[i].fd = -1;
                 } else {
                     for(j= 0; j< n; j++) {
                         buf[j] = toupper(buf[j]);
