@@ -103,11 +103,12 @@ int main(int argc, char* argv[])
                     }
                     write(sockfd, buf, n);
                 }
-                if(--nready == 0) {
+                if(--nready <= 0) {
                     break;
                 }
             }
         }
     }
     close(listenfd);
+    return 0;
 }
