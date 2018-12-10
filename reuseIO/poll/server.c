@@ -77,7 +77,7 @@ int main(int argc, char* argv[])
             }
         }
 
-        for(i=1; i< maxi; i++) { // 检查client[]
+        for(i=1; i<= maxi; i++) { // 检查client[]
             if((sockfd = client[i].fd) < 0 ) {
                 continue;
             }
