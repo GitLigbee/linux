@@ -27,7 +27,7 @@ int main(int argc, char *argv[])
     struct sockaddr_in cliaddr, servaddr;
     struct epoll_event tep, ep[OPEN_MAX];
 
-    listenfd = Socket(AF_INET, SOCK_STREAM, 0);
+    listenfd = socket(AF_INET, SOCK_STREAM, 0);
     bzero(&servaddr, sizeof(servaddr));
     servaddr.sin_family = AF_INET;
     servaddr.sin_addr.s_addr = htonl(INADDR_ANY);
@@ -68,23 +68,26 @@ int main(int argc, char *argv[])
                 clilen = sizeof(cliaddr);
                 connfd = accept(listenfd, (struct sockaddr *)&cliaddr, &clilen);
                 printf("received from %s at PORT %d\n", inet_ntop(AF_INET, &cliaddr.sin_addr, str, sizeof(str)), ntohs(cliaddr.sin_port));
-                for (j = 0; j < OPEN_MAX; j++)
+                for (j = 0; j < OPEN_MAX; j++) {
                     if (client[j] < 0) {
                         client[j] = connfd; /* save descriptor */
                         break;
+                    }
                 }
-            if (j == OPEN_MAX) {
-                fputs("too many clients\n", stderr);
-                exit(1);
-            }
+                    
+                if (j == OPEN_MAX) {
+                    fputs("too many clients\n", stderr);
+                    exit(1);
+                }
                 
-            if (j > maxi)
-                maxi = j; /* max index in client[] array */
-            tep.events = EPOLLIN; tep.data.fd = connfd;
-            res = epoll_ctl(efd, EPOLL_CTL_ADD, connfd, &tep);
-            if (res == -1)
-                fputs("epoll_ctl\n", stderr);
-                exit(1);
+                if (j > maxi)
+                    maxi = j; /* max index in client[] array */
+                tep.events = EPOLLIN; tep.data.fd = connfd;
+                res = epoll_ctl(efd, EPOLL_CTL_ADD, connfd, &tep);
+                if (res == -1) {
+                    fputs("epoll_ctl\n", stderr);
+                    exit(1);
+                }
             }
             else
             {
