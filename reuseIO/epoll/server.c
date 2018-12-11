@@ -10,7 +10,8 @@
 #include <errno.h>
 #include <fcntl.h>
 #include <stdlib.h>
-#include <poll.h>
+
+#include <sys/epoll.h>
 
 #define MAXLINE 80
 #define SERV_PORT 8000
@@ -25,6 +26,7 @@ int main(int argc, char *argv[])
     int client[OPEN_MAX];
     struct sockaddr_in cliaddr, servaddr;
     struct epoll_event tep, ep[OPEN_MAX];
+
     listenfd = Socket(AF_INET, SOCK_STREAM, 0);
     bzero(&servaddr, sizeof(servaddr));
     servaddr.sin_family = AF_INET;
