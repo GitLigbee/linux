@@ -1,2 +1,3 @@
-# linux
-linux
+# guide-c
+
+> learning c language
